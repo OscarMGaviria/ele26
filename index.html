@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Privado</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+```
+    body {
+        font-family: 'DM Sans', sans-serif;
+        background: #1a1a2e;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* ── LOGIN ── */
+    #loginScreen {
+        width: 100%;
+        max-width: 360px;
+        padding: 20px;
+        animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-box {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(200,151,74,0.3);
+        border-radius: 8px;
+        padding: 40px 32px;
+        text-align: center;
+    }
+
+    .login-box h1 {
+        color: #c8974a;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 28px;
+        letter-spacing: 1px;
+    }
+
+    .field {
+        margin-bottom: 14px;
+        text-align: left;
+    }
+
+    .field label {
+        display: block;
+        color: rgba(255,255,255,0.4);
+        font-size: 11px;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+    }
+
+    .field input {
+        width: 100%;
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(200,151,74,0.2);
+        border-radius: 5px;
+        padding: 12px 14px;
+        color: white;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 15px;
+        transition: border-color 0.2s;
+    }
+
+    .field input:focus {
+        outline: none;
+        border-color: #c8974a;
+    }
+
+    .field input::placeholder { color: rgba(255,255,255,0.2); }
+
+    .login-btn {
+        width: 100%;
+        margin-top: 8px;
+        padding: 13px;
+        background: #c8974a;
+        color: #1a1a2e;
+        border: none;
+        border-radius: 5px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .login-btn:hover { background: #e8b86d; }
+
+    .error {
+        color: #f1948a;
+        font-size: 13px;
+        margin-top: 12px;
+        display: none;
+    }
+
+    /* ── FOTOS ── */
+    #appScreen {
+        display: none;
+        width: 100%;
+        min-height: 100vh;
+        background: #1a1a2e;
+        padding: 24px 16px;
+    }
+
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 800px;
+        margin: 0 auto 24px;
+    }
+
+    .top-bar span {
+        color: #c8974a;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .btn-salir {
+        background: transparent;
+        border: 1px solid rgba(200,151,74,0.4);
+        color: #c8974a;
+        padding: 7px 16px;
+        border-radius: 4px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-salir:hover { background: #c8974a; color: #1a1a2e; }
+
+    .fotos {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .fotos img {
+        width: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+        aspect-ratio: 3/4;
+        display: block;
+        border: 1px solid rgba(200,151,74,0.2);
+    }
+
+    @media (max-width: 480px) {
+        .fotos { grid-template-columns: 1fr 1fr; gap: 10px; }
+    }
+</style>
+```
+
+</head>
+<body>
+
+<!-- LOGIN -->
+
+<div id="loginScreen">
+    <div class="login-box">
+        <h1>🔒 Acceso Privado</h1>
+        <div class="field">
+            <label>Usuario</label>
+            <input type="text" id="user" placeholder="usuario">
+        </div>
+        <div class="field">
+            <label>Clave</label>
+            <input type="password" id="pass" placeholder="••••">
+        </div>
+        <button class="login-btn" onclick="login()">Entrar</button>
+        <p class="error" id="err">Usuario o clave incorrectos</p>
+    </div>
+</div>
+
+<!-- FOTOS -->
+
+<div id="appScreen">
+    <div class="top-bar">
+        <span>🔒 Acceso Privado</span>
+        <button class="btn-salir" onclick="salir()">Salir</button>
+    </div>
+    <div class="fotos">
+        <img src="IMG_2392.png" alt="Foto 1">
+        <img src="IMG_2393.png" alt="Foto 2">
+    </div>
+</div>
+
+<script>
+    function login() {
+        const u = document.getElementById('user').value.trim();
+        const p = document.getElementById('pass').value;
+        if (u === 'oscar' && p === '2213') {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.body.style.display = 'block';
+            document.getElementById('appScreen').style.display = 'block';
+        } else {
+            const err = document.getElementById('err');
+            err.style.display = 'block';
+            setTimeout(() => err.style.display = 'none', 3000);
+        }
+    }
+
+    function salir() {
+        document.getElementById('appScreen').style.display = 'none';
+        document.body.style.display = 'flex';
+        document.body.style.alignItems = 'center';
+        document.body.style.justifyContent = 'center';
+        document.getElementById('loginScreen').style.display = 'block';
+        document.getElementById('user').value = '';
+        document.getElementById('pass').value = '';
+    }
+
+    ['user','pass'].forEach(id =>
+        document.getElementById(id).addEventListener('keydown', e => {
+            if (e.key === 'Enter') login();
+        })
+    );
+</script>
+
+</body>
+</html>
